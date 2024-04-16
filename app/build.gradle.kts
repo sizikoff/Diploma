@@ -1,5 +1,7 @@
 plugins {
-    alias(libs.plugins.android.application)
+//    alias(libs.plugins.android.application)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -8,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.diploma"
-        minSdk = 29
+        minSdk = 27
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -29,8 +31,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    composeOptions{
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 }
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray">#A6A6A6</color>
+    <color name="splash_morning">#71B8E5</color>
+    <color name="splash_day">#F79C1E</color>
+    <color name="splash_evening">#2F85BC</color>
+    <color name="splash_night">#242140</color>
+</resources>

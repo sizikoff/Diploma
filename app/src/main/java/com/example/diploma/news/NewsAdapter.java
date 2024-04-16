@@ -17,8 +17,26 @@ import com.example.diploma.R;
 
 import java.util.List;
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
+public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
+
+    //    // модель
+//    data class New(
+//        val theme: String,
+//        val message: String
+//    )
+//
+//    // список для отображение
+//    val news = remember {
+//        mutableStateListOf(New("", ""))
+//    }
+//
+//    // ресайклер
+//    LazyColumn() {
+//        items(news) { new ->
+//            Text(text = new.theme)
+//        }
+//    }
 
     public final List<News> states;
     public FragmentManager fragmentManager;
@@ -29,6 +47,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
         this.fragmentManager = fragmentManager;
 
     }
+
     @NonNull
     @Override
     public NewsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -59,17 +78,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>{
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .commit();
             }
-       });
+        });
     }
 
     @Override
     public int getItemCount() {
         return states.size();
     }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         ImageView img;
-        ViewHolder(View view){
+
+        ViewHolder(View view) {
             super(view);
             title = view.findViewById(R.id.title);
             img = view.findViewById(R.id.foto_news1);

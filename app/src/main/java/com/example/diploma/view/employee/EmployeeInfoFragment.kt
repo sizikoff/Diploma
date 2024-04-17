@@ -1,5 +1,6 @@
-package com.example.diploma.view.profile
+package com.example.diploma.view.employee
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +10,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.diploma.R
 
-class EmployeeFragment : Fragment() {
-    lateinit var fio: TextView
-    lateinit var foto: ImageView
-    lateinit var obyazannosti: TextView
-    lateinit var contact: TextView
+class EmployeeInfoFragment : Fragment() {
+    private lateinit var fio: TextView
+    private lateinit var foto: ImageView
+    private lateinit var obyazannosti: TextView
+    private lateinit var contact: TextView
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

@@ -1,8 +1,8 @@
 package com.example.diploma.model
 
-class Employee(
+data class Employee(
     val fio: String,
-    val dolznost: String,
-    val obyazannost: String,
-    val foto: Int
+    val post: String,
+    val responsibilities: String,
+    val photo: Int
 )

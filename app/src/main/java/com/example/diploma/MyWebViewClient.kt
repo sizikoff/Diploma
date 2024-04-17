@@ -1,25 +1,27 @@
-package com.example.diploma;
+package com.example.diploma
 
-import android.annotation.TargetApi;
-import android.net.http.SslError;
-import android.os.Build;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.annotation.SuppressLint
+import android.net.http.SslError
+import android.webkit.SslErrorHandler
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 
-public class MyWebViewClient extends WebViewClient {
-    @TargetApi(Build.VERSION_CODES.N)
-    @Override
-    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-        view.loadUrl(request.getUrl().toString());
-        return true;
+class MyWebViewClient : WebViewClient() {
+    override fun shouldOverrideUrlLoading(
+        view: WebView,
+        request: WebResourceRequest
+    ): Boolean {
+        view.loadUrl(request.url.toString())
+        return true
     }
 
-    // Для старых устройств
-    @Override
-    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-        handler.proceed();
+    @SuppressLint("WebViewClientOnReceivedSslError")
+    override fun onReceivedSslError(
+        view: WebView,
+        handler: SslErrorHandler,
+        error: SslError
+    ) {
+        handler.proceed()
     }
-
 }

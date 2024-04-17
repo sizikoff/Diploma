@@ -1,35 +1,34 @@
-package com.example.diploma.activity;
+package com.example.diploma.activity
 
-import android.os.Bundle;
-import android.webkit.WebView;
+import android.annotation.SuppressLint
+import android.os.Bundle
+import android.webkit.WebView
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import com.example.diploma.MyWebViewClient
+import com.example.diploma.R
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
+class WebViewActivity : AppCompatActivity() {
+    private lateinit var webView: WebView
 
-import com.example.diploma.MyWebViewClient;
-import com.example.diploma.R;
+    @SuppressLint("SetJavaScriptEnabled")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-public class WebViewActivity extends AppCompatActivity {
+        enableEdgeToEdge()
 
-    WebView webView;
+        setContentView(R.layout.activity_web_view)
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_web_view);
-        webView = findViewById(R.id.webview);
-        webView.setWebViewClient(new MyWebViewClient());
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("https://dis-group.ru/");
+        webView = findViewById<WebView?>(R.id.webview).apply {
+            setWebViewClient(MyWebViewClient())
+            getSettings().javaScriptEnabled = true
+            loadUrl("https://dis-group.ru/")
+        }
     }
 
-    @Override
-    public void onBackPressed() {
-        if(webView.canGoBack()) {
-            webView.goBack();
-        } else {
-            super.onBackPressed();
-        }
+    @Deprecated("Deprecated in Java")
+    @Suppress("DeprecatedCallableAddReplaceWith", "RedundantSuppression","DEPRECATION")
+    override fun onBackPressed() {
+        if (webView.canGoBack()) webView.goBack() else super.onBackPressed()
     }
 }

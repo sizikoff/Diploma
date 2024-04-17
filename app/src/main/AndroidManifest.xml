@@ -28,11 +28,11 @@
             android:name=".activity.SplashActivity"
             android:exported="false" />
         <activity
-            android:name=".MainRecycler.MainFragment"
+            android:name=".view.main.MainFragment"
             android:exported="false" />
         <activity
-            android:name=".view.MainMenu"
-            android:exported="false" >
+            android:name=".view.main.MainMenu"
+            android:exported="true" >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

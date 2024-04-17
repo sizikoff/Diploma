@@ -1,4 +1,4 @@
-package com.example.diploma.MainRecycler;
+package com.example.diploma.view.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,19 +13,20 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.diploma.view.employee.EmployeeFragment;
 import com.example.diploma.R;
+import com.example.diploma.model.Division;
+import com.example.diploma.view.employee.EmployeeFragment;
 
 import java.util.List;
 
 public class StateAdapter extends RecyclerView.Adapter<StateAdapter.ViewHolder>{
 
 
-    public final List<Divisions> states;
+    public final List<Division> states;
     public FragmentManager fragmentManager;
 
 
-    public StateAdapter(List<Divisions> states, FragmentManager fragmentManager) {
+    public StateAdapter(List<Division> states, FragmentManager fragmentManager) {
         this.states = states;
         this.fragmentManager = fragmentManager;
 
@@ -39,25 +40,21 @@ public class StateAdapter extends RecyclerView.Adapter<StateAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull StateAdapter.ViewHolder holder, int position) {
-        Divisions state = states.get(position);
-        holder.flagView.setImageResource(state.getFlagResource());
-        holder.nameView.setText(state.getName());
+        Division state = states.get(position);
+        holder.flagView.setImageResource(state.getIcon());
+        holder.nameView.setText(state.getTitle());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new EmployeeFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("key", state.getName());
-                bundle.putString("cap", state.getCapital());
-                fragment.setArguments(bundle);
+        holder.itemView.setOnClickListener(v -> {
+            Fragment fragment = new EmployeeFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("key", state.getTitle());
+            bundle.putString("cap", state.getDescription());
+            fragment.setArguments(bundle);
 
-                // Замените текущий фрагмент на новый
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, fragment)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .commit();
-            }
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .commit();
         });
     }
 
@@ -65,6 +62,7 @@ public class StateAdapter extends RecyclerView.Adapter<StateAdapter.ViewHolder>{
     public int getItemCount() {
         return states.size();
     }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView flagView;
         final TextView nameView;
@@ -74,6 +72,4 @@ public class StateAdapter extends RecyclerView.Adapter<StateAdapter.ViewHolder>{
             nameView = view.findViewById(R.id.name);
         }
     }
-
-
 }

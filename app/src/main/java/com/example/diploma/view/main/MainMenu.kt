@@ -1,12 +1,10 @@
-package com.example.diploma.view
+package com.example.diploma.view.main
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.example.diploma.MainRecycler.Divisions
-import com.example.diploma.MainRecycler.MainFragment
 import com.example.diploma.R
 import com.example.diploma.view.news.NewsFragment
 import com.example.diploma.view.profile.ProfileFragment
@@ -14,8 +12,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 
 class MainMenu : AppCompatActivity() {
-    var states: ArrayList<Divisions> = ArrayList()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)

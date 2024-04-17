@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.diploma.R;
 import com.example.diploma.model.Employee;
-import com.example.diploma.view.profile.EmployeeFragment;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
 
 
     private final List<Employee> states;
-    private FragmentManager fragmentManager;
+    private final FragmentManager fragmentManager;
 
 
     EmployeeAdapter(List<Employee> states, FragmentManager fragmentManager) {
@@ -41,17 +40,17 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull EmployeeAdapter.ViewHolder holder, int position) {
         Employee state = states.get(position);
-        holder.foto.setImageResource(state.getFoto());
+        holder.foto.setImageResource(state.getPhoto());
         holder.fio.setText(state.getFio());
-        holder.dolzhnost.setText(state.getDolznost());
+        holder.dolzhnost.setText(state.getPost());
 
 
         holder.itemView.setOnClickListener(v -> {
-            Fragment fragment = new EmployeeFragment();
+            Fragment fragment = new EmployeeInfoFragment();
             Bundle bundle = new Bundle();
             bundle.putString("fio", state.getFio());
-            bundle.putString("obyazannost", state.getObyazannost());
-            bundle.putInt("foto", state.getFoto());
+            bundle.putString("obyazannost", state.getResponsibilities());
+            bundle.putInt("foto", state.getPhoto());
             fragment.setArguments(bundle);
 
             // Замените текущий фрагмент на новый

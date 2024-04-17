@@ -18,7 +18,6 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = ComposeView(requireContext()).apply {
-
         val categories = getDivisionsList()
         setContent {
             MainScreen(categories) { division ->

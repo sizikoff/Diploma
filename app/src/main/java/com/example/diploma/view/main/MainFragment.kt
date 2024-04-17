@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.FragmentTransaction
 import com.example.diploma.R
 import com.example.diploma.data.DataSource.getDivisionsList
+import com.example.diploma.view.employee.EmployeeFragment
 
 class MainFragment : Fragment() {
 
@@ -18,17 +17,23 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(
-        R.layout.fragment_main, container, false
-    )
+    ): View = ComposeView(requireContext()).apply {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val states = getDivisionsList()
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        val adapter = StateAdapter(states, parentFragmentManager)
-        recyclerView.adapter = adapter
-        recyclerView.addItemDecoration(DividerItemDecoration(context, VERTICAL))
+        val categories = getDivisionsList()
+        setContent {
+            MainScreen(categories) { division ->
+                val fragment: Fragment = EmployeeFragment()
+                val bundle = Bundle()
+                bundle.putString("key", division.title)
+                bundle.putString("cap", division.description)
+                fragment.arguments = bundle
+
+                @Suppress("DEPRECATION")
+                requireFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .commit()
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@ import com.example.diploma.view.news.NewsFragment
 import com.example.diploma.view.profile.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
+import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
 
 class MainMenu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,26 +20,27 @@ class MainMenu : AppCompatActivity() {
 
         startFragment(MainFragment())
 
+        bottomNavigationView.setOnItemSelectedListener(
+            OnItemSelectedListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.action_map -> {
+                        startFragment(NewsFragment())
+                        return@OnItemSelectedListener true
+                    }
 
-        bottomNavigationView.setOnItemSelectedListener(NavigationBarView.OnItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.action_map -> {
-                    startFragment(NewsFragment())
-                    return@OnItemSelectedListener true
-                }
+                    R.id.action_dial -> {
+                        startFragment(MainFragment())
+                        return@OnItemSelectedListener true
+                    }
 
-                R.id.action_dial -> {
-                    startFragment(MainFragment())
-                    return@OnItemSelectedListener true
+                    R.id.action_mail -> {
+                        startFragment(ProfileFragment())
+                        return@OnItemSelectedListener true
+                    }
                 }
-
-                R.id.action_mail -> {
-                    startFragment(ProfileFragment())
-                    return@OnItemSelectedListener true
-                }
+                false
             }
-            false
-        })
+        )
     }
 
     private fun startFragment(fragment: Fragment) {

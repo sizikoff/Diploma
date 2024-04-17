@@ -1,4 +1,4 @@
-package com.example.diploma.profile
+package com.example.diploma.view.profile
 
 import android.content.Intent
 import android.content.Intent.ACTION_SENDTO
@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import com.example.diploma.MainActivity
-import com.example.diploma.WebViewActivity
+import com.example.diploma.activity.MainActivity
+import com.example.diploma.activity.WebViewActivity
 
 
 class ProfileFragment : Fragment() {

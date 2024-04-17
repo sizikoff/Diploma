@@ -1,4 +1,4 @@
-package com.example.diploma.Employee;
+package com.example.diploma.view.employee;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.diploma.R;
+import com.example.diploma.model.Employee;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -69,7 +70,6 @@ public class EmployeeFragment extends Fragment {
         states.add(new Employee(randomFi0(), randomDolznost(),"Организовывает встречи с лидерами отделов и предприятий",getRandomCard()));
         states.add(new Employee(randomFi0(), randomDolznost(),"Помогает компании достичь своих финансовых и маркетинговых целей, используя инновационный технологический подход",getRandomCard()));
         states.add(new Employee(randomFi0(), randomDolznost(),"Управляет всеми сферами деятельности, поэтому он несёт полную законодательную ответственность за работу компании и её последствия",getRandomCard()));
-
     }
 
     public int getRandomCard() {

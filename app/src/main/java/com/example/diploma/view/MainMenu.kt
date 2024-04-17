@@ -1,62 +1,55 @@
-package com.example.diploma;
+package com.example.diploma.view
 
-import android.os.Bundle;
-import android.view.MenuItem;
+import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import com.example.diploma.MainRecycler.Divisions
+import com.example.diploma.MainRecycler.MainFragment
+import com.example.diploma.R
+import com.example.diploma.view.news.NewsFragment
+import com.example.diploma.view.profile.ProfileFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+class MainMenu : AppCompatActivity() {
+    var states: ArrayList<Divisions> = ArrayList()
 
-import com.example.diploma.MainRecycler.Divisions;
-import com.example.diploma.MainRecycler.MainFragment;
-import com.example.diploma.news.NewsFragment;
-import com.example.diploma.profile.ProfileFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main_menu)
+        val bottomNavigationView = findViewById<View>(R.id.bottom_boot) as BottomNavigationView
 
-import java.util.ArrayList;
-
-public class MainMenu extends AppCompatActivity {
-
-    ArrayList<Divisions> states = new ArrayList<Divisions>();
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu);
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.bottom_boot);
-
-        startFragment(new MainFragment());
+        startFragment(MainFragment())
 
 
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.action_map:
-                        startFragment(new NewsFragment());
-                        return true;
-                    case R.id.action_dial:
-                        startFragment(new MainFragment());
-                        return true;
-                    case R.id.action_mail:
-                        startFragment(new ProfileFragment());
-                        return true;
+        bottomNavigationView.setOnItemSelectedListener(NavigationBarView.OnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.action_map -> {
+                    startFragment(NewsFragment())
+                    return@OnItemSelectedListener true
                 }
-                return false;
+
+                R.id.action_dial -> {
+                    startFragment(MainFragment())
+                    return@OnItemSelectedListener true
+                }
+
+                R.id.action_mail -> {
+                    startFragment(ProfileFragment())
+                    return@OnItemSelectedListener true
+                }
             }
-        });
+            false
+        })
     }
 
-    private void startFragment(Fragment fragment) {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction ft = manager.beginTransaction();
-        ft.replace(R.id.fragment_container, fragment);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.commit();
-
+    private fun startFragment(fragment: Fragment) {
+        val manager = supportFragmentManager
+        val ft = manager.beginTransaction()
+        ft.replace(R.id.fragment_container, fragment)
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        ft.commit()
     }
 }

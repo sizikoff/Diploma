@@ -1,4 +1,4 @@
-package com.example.diploma.profile
+package com.example.diploma.view.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

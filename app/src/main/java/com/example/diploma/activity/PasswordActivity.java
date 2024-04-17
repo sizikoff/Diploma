@@ -1,4 +1,4 @@
-package com.example.diploma;
+package com.example.diploma.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.diploma.R;
 
 public class PasswordActivity extends AppCompatActivity {
 

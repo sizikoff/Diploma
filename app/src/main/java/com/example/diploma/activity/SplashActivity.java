@@ -1,4 +1,4 @@
-package com.example.diploma;
+package com.example.diploma.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -15,6 +15,9 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
+import com.example.diploma.view.MainMenu;
+import com.example.diploma.R;
 
 import java.util.Calendar;
 

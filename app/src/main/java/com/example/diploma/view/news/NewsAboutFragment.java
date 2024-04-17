@@ -1,4 +1,4 @@
-package com.example.diploma.news;
+package com.example.diploma.view.news;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

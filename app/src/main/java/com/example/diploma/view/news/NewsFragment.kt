@@ -1,115 +1,192 @@
-package com.example.diploma.news;
+package com.example.diploma.view.news
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement.spacedBy
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color.Companion.DarkGray
+import androidx.compose.ui.graphics.Color.Companion.Gray
+import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.layout.ContentScale.Companion.Crop
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
+import androidx.compose.ui.text.style.TextAlign.Companion.Start
+import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
+import com.example.diploma.R
+import com.example.diploma.model.New
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+class NewsFragment : Fragment() {
 
-import com.example.diploma.R;
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = ComposeView(requireContext()).apply {
+        val news = setInitialData()
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.*;
+        setContent {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp),
+                verticalArrangement = spacedBy(8.dp)
+            ) {
+                item { Spacer(Modifier.height(8.dp)) }
 
+                items(news) { new ->
+                    NewsItem(new) {
+                        val fragment: Fragment = NewsAboutFragment()
+                        val bundle = Bundle()
+                        bundle.putString("title", new.title)
+                        bundle.putString("text", new.text)
+                        bundle.putInt("image", new.image)
+                        fragment.arguments = bundle
 
+                        @Suppress("DEPRECATION")
+                        fragmentManager
+                            ?.beginTransaction()
+                            ?.replace(R.id.fragment_container, fragment)
+                            ?.setTransition(TRANSIT_FRAGMENT_FADE)
+                            ?.commit()
+                    }
+                }
 
-public class NewsFragment extends Fragment {
-
-    ArrayList<News> states = new ArrayList<>();
-
-    int[] images = {
-            R.drawable.mark, R.drawable.serv, R.drawable.news,R.drawable.bugal,R.drawable.cons };
-
-    Random r1=new Random();
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_news, container, false);
-        // Inflate the layout for this fragment
-
-
-        return view;
+                item { Spacer(Modifier.height(16.dp)) }
+            }
+        }
     }
+}
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun NewsItem(
+    new: New,
+    onClick: () -> Unit
+) {
+    Card(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(2.dp),
+        colors = CardDefaults.cardColors(White)
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(horizontal = 12.dp)
+                .padding(bottom = 6.dp),
+            fontWeight = SemiBold,
+            overflow = Ellipsis,
+            textAlign = Start,
+            fontSize = 18.sp,
+            text = new.title,
+            color = Gray,
+            maxLines = 1
+        )
 
-        setInitialData();
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_news);
-        recyclerView.setLayoutManager(
-                new LinearLayoutManager(getContext()));
-        // создаем адаптер
-        NewsAdapter adapter = new NewsAdapter(states,getParentFragmentManager());
-        // устанавливаем для списка адаптер
-        recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
-                DividerItemDecoration.VERTICAL));
+        Divider(
+            thickness = 2.dp,
+            color = DarkGray
+        )
 
-        super.onViewCreated(view, savedInstanceState);
+        Image(
+            painter = painterResource(new.image),
+            contentDescription = null,
+            contentScale = Crop,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+        )
     }
+}
 
-    private void setInitialData() {
-        states.add(new News("Консультирование",getRandomCard(),"Будет довольно прохладно.Новости на неделе:сегодня в городе произошел крупный пожар в районе Клинтон"));
-        states.add(new News("Отмечвем день рождения начальника",getRandomCard(),"Сегодня сообщили точную дату выхода всеми ожидаемой игры Spore 2"));
-        states.add(new News("Совещание по вопросам дверного нейминга",getRandomCard(),"Следующее в программе:Осуждение мемов в интернете"));
-        states.add(new News("Турнир по футболу.Не опаздывайте",getRandomCard(),"Следующее в программе:Интервью с котом - только не пропустите!"));
-        states.add(new News("Поднимите зарплату",getRandomCard(),"Новый фильм \"Рвущий\" рвёт все кинотеатры города и сборы фильма превысили 120 миллионов долларов\n"));
-        states.add(new News("Сбережения",getRandomCard(),"Был построен новый жилой комплекс \"Дубовый\""));
-        states.add(new News("Аналитики на выезде",getRandomCard(),"Следующее в программе:Обсуждение матча в спорте"));
-        states.add(new News("Интервью с лидерами предприятия",getRandomCard(),"\n" +
-                "Сегодня торжественная дата - День Города!"));
+private fun setInitialData(): List<New> {
+    val list = mutableListOf<New>()
+    val images: IntArray = intArrayOf(
+        R.drawable.mark,
+        R.drawable.serv,
+        R.drawable.news,
+        R.drawable.bugal,
+        R.drawable.cons
+    )
 
-
-    }
-
-    public int getRandomCard() {
-        return this.images[r1.nextInt(4)];
-    }
-
-    public String division(){
-        String finalname;
-
-        Random generate = new Random();
-        String[] name = {"Разработка", "Консалтинг", "Бухгалтерия", "ГеймДев","Тестирование","Завхоз","Маркетинг","Бизнес-поддержка"};
-
-        finalname = name[generate.nextInt(7)];
-        return finalname;
-    }
-
-    public String randomFi0(){
-        String finalname;
-
-        Random generate = new Random();
-        String[] name = {"Виктор", "Алексей", "Владимир", "Евгений","Антон","Сергей","Данил","Жорж","Владислав"};
-        String[] surname = {"Фролов", "Кулагин", "Дмитриев", "Ткачев","Павлов","Котов","Козлов","Иванов","Поляков"};
-
-        finalname = name[generate.nextInt(8)]+ " " +surname[generate.nextInt(8)];
-        return finalname;
-    }
-
-    public String RandomDateTime (){
-        String finalDate = "";
-
-        GregorianCalendar gc = new GregorianCalendar();
-        int year = randBetween(2012,2024);
-        gc.set(GregorianCalendar.YEAR,year);gc.set(GregorianCalendar.YEAR,year);
-        int day = randBetween(1, gc.getActualMaximum(gc.DAY_OF_MONTH));
-        gc.set(GregorianCalendar.DAY_OF_YEAR,year);
-        finalDate =gc.get(GregorianCalendar.YEAR) + "-"+ gc.get(GregorianCalendar.MONTH + 1) + "-"+gc.get(GregorianCalendar.DAY_OF_MONTH);
-
-        return finalDate;
-    }
-
-    public static int randBetween(int start, int end) {
-        return start + (int)Math.round(Math.random() * (end - start));
-    }
+    list.add(
+        New(
+            title = "Консультирование",
+            image = images.random(),
+            text = "Будет довольно прохладно.Новости на неделе:сегодня в городе произошел крупный пожар в районе Клинтон"
+        )
+    )
+    list.add(
+        New(
+            title = "Отмечвем день рождения начальника",
+            image = images.random(),
+            text = "Сегодня сообщили точную дату выхода всеми ожидаемой игры Spore 2"
+        )
+    )
+    list.add(
+        New(
+            title = "Совещание по вопросам дверного нейминга",
+            image = images.random(),
+            text = "Следующее в программе:Осуждение мемов в интернете"
+        )
+    )
+    list.add(
+        New(
+            title = "Турнир по футболу.Не опаздывайте",
+            image = images.random(),
+            text = "Следующее в программе:Интервью с котом - только не пропустите!"
+        )
+    )
+    list.add(
+        New(
+            title = "Поднимите зарплату",
+            image = images.random(),
+            text = "Новый фильм \"Рвущий\" рвёт все кинотеатры города и сборы фильма превысили 120 миллионов долларов\n"
+        )
+    )
+    list.add(
+        New(
+            title = "Сбережения",
+            image = images.random(),
+            text = "Был построен новый жилой комплекс \"Дубовый\""
+        )
+    )
+    list.add(
+        New(
+            title = "Аналитики на выезде",
+            image = images.random(),
+            text = "Следующее в программе:Обсуждение матча в спорте"
+        )
+    )
+    list.add(
+        New(
+            title = "Интервью с лидерами предприятия",
+            image = images.random(),
+            text = "Сегодня торжественная дата - День Города!"
+        )
+    )
+    return list
 }

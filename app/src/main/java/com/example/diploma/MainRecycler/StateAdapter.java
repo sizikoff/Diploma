@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.diploma.Employee.EmployeeFragment;
+import com.example.diploma.view.employee.EmployeeFragment;
 import com.example.diploma.R;
 
 import java.util.List;

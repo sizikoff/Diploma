@@ -9,7 +9,6 @@ import com.example.diploma.R
 import com.example.diploma.view.news.NewsFragment
 import com.example.diploma.view.profile.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
 
 class MainMenu : AppCompatActivity() {

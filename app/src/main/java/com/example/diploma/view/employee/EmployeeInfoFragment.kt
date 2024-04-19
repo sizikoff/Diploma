@@ -1,39 +1,34 @@
 package com.example.diploma.view.employee
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.diploma.R
+import com.example.diploma.model.Employee
 
 class EmployeeInfoFragment : Fragment() {
-    private lateinit var fio: TextView
-    private lateinit var foto: ImageView
-    private lateinit var obyazannosti: TextView
-    private lateinit var contact: TextView
 
-    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(
-        R.layout.fragment_employe_profile, container, false
-    ).apply {
-        assert(arguments != null)
-        obyazannosti = findViewById(R.id.dolznost1)
-        contact = findViewById(R.id.contact)
-        foto = findViewById(R.id.foto1)
-        fio = findViewById(R.id.fio1)
-
-        obyazannosti.text = arguments?.getString("obyazannost")
-        fio.text = arguments?.getString("fio")
-        contact.text = "+7 (914) 558-99-96"
-        arguments?.getInt("foto")?.let {
-            foto.setImageResource(it)
+    ): View = ComposeView(requireContext()).apply {
+        arguments?.apply {
+            val responsibilities = getString("responsibilities") ?: ""
+            val fio = getString("fio") ?: ""
+            val post = getString("post") ?: ""
+            val photo = getInt("photo")
+            val employee = Employee(fio, post, responsibilities, photo)
+            setContent { EmployeeInfoScreen(employee) }
+        } ?: run {
+            @Suppress("DEPRECATION")
+            requireFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, EmployeeFragment())
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit()
         }
     }
 }

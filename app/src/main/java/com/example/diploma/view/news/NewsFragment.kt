@@ -19,7 +19,7 @@ class NewsFragment : Fragment() {
         val news = getNews()
         setContent {
             NewsMainScreen(news) { new ->
-                val fragment: Fragment = NewsAboutFragment()
+                val fragment: Fragment = NewInfoFragment()
                 val bundle = Bundle()
                 bundle.putString("title", new.title)
                 bundle.putString("text", new.text)

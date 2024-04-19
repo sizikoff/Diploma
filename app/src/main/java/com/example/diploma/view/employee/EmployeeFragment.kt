@@ -21,9 +21,10 @@ class EmployeeFragment : Fragment() {
             EmployeeScreen(employees) { employee ->
                 val fragment: Fragment = EmployeeInfoFragment()
                 val bundle = Bundle()
+                bundle.putString("responsibilities", employee.responsibilities)
                 bundle.putString("fio", employee.fio)
-                bundle.putString("obyazannost", employee.responsibilities)
-                bundle.putInt("foto", employee.photo)
+                bundle.putString("post", employee.post)
+                bundle.putInt("photo", employee.photo)
                 fragment.arguments = bundle
 
                 @Suppress("DEPRECATION")
